@@ -1,0 +1,24 @@
+login{% extends "../single.html" %}
+{% block title %}Login{% end %}
+
+{% block scripts %}
+
+
+{% end %}
+
+{% block main %}
+<div class="row" id="app">
+    <div class="col-md-4 col-md-push-4">
+        <form class="form-horizontal" role="form" method="post">
+            {%  raw xsrf_form_html() %}
+            <t-input cid="email" desc="Email"></t-input>
+            <t-input cid="password" desc="password"></t-input>
+            <t-submit value="Login" @click.stop.prevent="login('/api/v1/auth/login')"></t-submit>
+        </form>
+    </div>
+</div>
+{% end %}
+
+{% block end_scripts %}
+<script type="text/javascript" src="/static/dist/auth/login.js"></script>
+{% end %}
