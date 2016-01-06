@@ -16,5 +16,5 @@ class User(Model):
     email = String(length=40, nullable=False)
     password = String(length=60, nullable=False)
 
-    def __repr__(self):
-        return '<User {}>'.format(self.nickname)
+    # def __repr__(self):
+    #     return '<User {}>'.format(self.nickname)

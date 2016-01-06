@@ -16,7 +16,6 @@ __author__ = 'ghost'
 @router.Route('/api/v1/auth/login')
 class ApiAuthLoginhandler(helper.BaseApiRequestHandler):
 
-    @helper.parse_json
     def get(self, *args, **kwargs):
         authorization = self.request.headers.get('Authorization')
         if authorization:
@@ -27,7 +26,7 @@ class ApiAuthLoginhandler(helper.BaseApiRequestHandler):
             result = dict(code=RespError.token_missing.code, message=RespError.token_missing.message)
             return self.jsonify(result)
 
-        user = User(email=email)
+        user = User.findone(email=email)
         if not user:
             self.set_status(401)
             result = dict(code=AuthError.user_not_exist.code, message=AuthError.user_not_exist.message)

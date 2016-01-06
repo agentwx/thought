@@ -49,11 +49,16 @@ var vue = new Vue({
             if (this.email.emailError || this.email.passwordError){
                 return false
             }else {
+                var token = btoa(email + ':' + password);
+
                 $.ajax({
                     async: true,
                     url: api,
-                    data: JSON.stringify({email: email, password: password}),
-                    type: 'post',
+                    headers: {
+                        'Authorization': 'Basic ' + token
+                    },
+                    // data: JSON.stringify({email: email, password: password}),
+                    type: 'get',
                     dataType: 'json',
                     success: function (resp) {
                         console.log(resp)

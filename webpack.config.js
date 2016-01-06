@@ -5,7 +5,10 @@ var path = require("path");
 module.exports = {
     entry: {
         "auth/login": "./static/js/auth/login.js",
-        "auth/register": "./static/js/auth/register.js"
+        "auth/register": "./static/js/auth/register.js",
+        "index": "./static/js/thought/index.js",
+        "home": "./static/js/thought/home.js"
+
     },
     output: {
         path: "./static/dist",

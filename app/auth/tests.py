@@ -23,3 +23,21 @@ class TestRegister(unittest.TestCase):
         resp = requests.post(url, json=data)
         print resp.json()
         self.assertEqual(201, resp.status_code)
+
+
+class TestLogin(unittest.TestCase):
+    def setup(self):
+        pass
+
+    def test_login(self):
+        email = 'rsj217@gmail.com'
+        password = '123qwe'
+        token = base64.b64encode("{}:{}".format(email, password))
+        headers = {
+            'Authorization': 'Basic {}'.format(token)
+        }
+
+        url = '{}/api/v1/auth/login'.format(HOST)
+        resp = requests.get(url, headers=headers)
+        print resp.json()
+        self.assertEqual(200, resp.status_code)
