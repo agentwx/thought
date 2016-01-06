@@ -63,7 +63,7 @@ var vue = new Vue({
                             timer: 2000,
                             allowOutsideClick: true
                         }, function(){
-                            $(location).attr('href', '/auth/home');
+                            $(location).attr('href', '/home');
                         })
                     },
                     error: function (XMLHttpRequest, textStatus) {

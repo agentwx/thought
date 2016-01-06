@@ -6,7 +6,6 @@ __author__ = 'ghost'
 import unittest
 import base64
 import requests
-import random
 
 HOST = 'http://127.0.0.1:5000'
 

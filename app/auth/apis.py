@@ -6,7 +6,7 @@ import base64
 import tornado.web
 from app.lib import router
 from app import helper
-from app.resperror import AuthError, DBError
+from app.resperror import AuthError, DBError, RespError
 from app.auth.models import User
 from settings import logger
 
@@ -16,17 +16,34 @@ __author__ = 'ghost'
 @router.Route('/api/v1/auth/login')
 class ApiAuthLoginhandler(helper.BaseApiRequestHandler):
 
-    def post(self, *args, **kwargs):
-        data = json.loads(self.request.body)
-        email = data['email']
-        password = data['password']
-        if email == 'rsj217@gmail.com' and password == '123':
-            self.session['user'] = 'rsj217'
+    @helper.parse_json
+    def get(self, *args, **kwargs):
+        authorization = self.request.headers.get('Authorization')
+        if authorization:
+            token = authorization[6:]
+            email, password = base64.b64decode(token).split(':')
+        else:
+            self.set_status(400)
+            result = dict(code=RespError.token_missing.code, message=RespError.token_missing.message)
+            return self.jsonify(result)
+
+        user = User(email=email)
+        if not user:
+            self.set_status(401)
+            result = dict(code=AuthError.user_not_exist.code, message=AuthError.user_not_exist.message)
+            return self.jsonify(result)
+
+        if password == user.password:
+            self.session['id'] = user.id
+            if user.nickname:
+                self.session['user'] = user.nickname
+            else:
+                self.session['user'], _ = user.email.split('@')
             self.session.save()
-            result = {'message': u'login successful'}
+            result = {}
         else:
             self.set_status(401)
-            result = {'message': u'username or password error'}
+            result = dict(code=AuthError.passwd_error.code, message=AuthError.passwd_error.message)
         self.jsonify(result)
 
 
@@ -63,5 +80,6 @@ class ApiAuthLogoutHandler(helper.BaseApiRequestHandler):
     @tornado.web.authenticated
     def post(self, *args, **kwargs):
         self.session.pop('user')
+        self.session.pop('id')
         result = {'message': u'logout successful'}
         self.jsonify(result)

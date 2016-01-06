@@ -8,9 +8,11 @@ from app import helper
 __author__ = 'ghost'
 
 
-@router.Route('/')
+@router.Route('/home')
 class ThoughtIndexHandler(helper.BaseRequestHandler):
 
+    @tornado.web.authenticated
     def get(self, *args, **kwargs):
+
         self.render('thought/index.html')
 
