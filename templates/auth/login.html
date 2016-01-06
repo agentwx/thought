@@ -11,9 +11,15 @@ login{% extends "../single.html" %}
     <div class="col-md-4 col-md-push-4">
         <form class="form-horizontal" role="form" method="post">
             {%  raw xsrf_form_html() %}
-            <t-input cid="email" desc="Email"></t-input>
-            <t-input cid="password" desc="password"></t-input>
-            <t-submit value="Login" @click.stop.prevent="login('/api/v1/auth/login')"></t-submit>
+            <div class="form-group" v-bind:class="{'has-error': email.emailError}" >
+            	<t-input cid="email" desc="Email" :msg="email.emailErrorMsg"></t-input>
+            </div>
+            <div class="form-group" v-bind:class="{'has-error': password.passwordError}" >
+            	<t-input cid="password" desc="password" :msg="password.passwordErrorMsg"></t-input>
+            </div>
+            <div class="form-group">
+            	<t-submit value="Login" @click.stop.prevent="login('/api/v1/auth/login')"></t-submit>
+            </div>
         </form>
     </div>
 </div>
