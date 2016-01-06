@@ -1,5 +1,15 @@
 var Vue = require('vue');
+var swal = require('sweetalert');
 var utils = require('../utils.js');
+
+var jQuery = $ = require('jquery');
+
+window.jQuery = jQuery;
+
+require('bootstrap');
+
+require('../../css/sweetalert.css');
+
 
 
 Vue.config.delimiters = ['${', '}'];
@@ -69,7 +79,12 @@ var vue = new Vue({
                     error: function (XMLHttpRequest, textStatus) {
                         var status_code = XMLHttpRequest.status;
                         var body = JSON.parse(XMLHttpRequest.responseText);
-                        alert(body.message)
+                        swal({
+                            title: body.message,
+                            type: "error",
+                            timer: 2000,
+                            allowOutsideClick: true
+                        })
                     }
                 });
                 return false;

@@ -21,7 +21,7 @@ SETTINGS = {
 
 MYSQLDB = {
     'host': '127.0.0.1',
-    'db': 'stock_localhost',
+    'db': 'thought',
     'user': 'root',
     'password': ''
 }

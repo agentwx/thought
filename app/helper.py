@@ -4,7 +4,9 @@
 __author__ = 'ghost'
 
 import json
+import functools
 import tornado.web
+from app.resperror import RespError
 from app.lib import session
 from settings import logger
 
@@ -38,3 +40,19 @@ class BaseApiRequestHandler(BaseRequestHandler):
         self.set_header('Content-type', 'application/json')
         self.set_header('Cache-Control', 'no-store')
         self.set_header('Pragma', 'no-store')
+
+
+def parse_json(method):
+
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        try:
+            data = json.loads(self.request.body)
+        except Exception, e:
+            logger.error('invalid json params')
+            self.set_status(500)
+            result = dict(code=RespError.json_error.code, message=RespError.json_error.message)
+            return self.jsonify(result)
+        setattr(self.request, 'data', data)
+        return method(self, *args, **kwargs)
+    return wrapper
