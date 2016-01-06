@@ -57,7 +57,6 @@ var vue = new Vue({
                     headers: {
                         'Authorization': 'Basic ' + token
                     },
-                    // data: JSON.stringify({email: email, password: password}),
                     type: 'get',
                     dataType: 'json',
                     success: function (resp) {

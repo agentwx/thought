@@ -4,6 +4,7 @@
 import tornado.web
 import tornado.ioloop
 from app.thought.views import *
+from app.account.views import *
 from app.auth.views import *
 from app.auth.apis import *
 from app.lib import router

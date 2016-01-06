@@ -7,7 +7,7 @@ module.exports = {
         "auth/login": "./static/js/auth/login.js",
         "auth/register": "./static/js/auth/register.js",
         "index": "./static/js/thought/index.js",
-        "home": "./static/js/thought/home.js"
+        "account/home": "./static/js/account/home.js"
 
     },
     output: {
