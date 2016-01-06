@@ -13,16 +13,18 @@ module.exports = {
         filename: '[name].js'
     },
     module: {
-/*        loaders:[
-            {
-                test: require.resolve('jquery'), // 暴露 jquery到全局
-                loader: 'expose?jQuery'
-            }
-        ]*/
         loaders: [
+            //{
+            //    test: require.resolve('jquery'), // 暴露 jquery到全局
+            //    loader: 'expose?jQuery'
+            //},
             {
                 test: /\.vue$/,
                 loader: 'vue'
+            },
+            {
+                test: /\.css$/,
+                loaders: ['style', 'css'],
             }
         ]
     }

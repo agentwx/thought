@@ -2,7 +2,6 @@ var Vue = require('vue');
 var utils = require('../utils.js');
 
 
-
 Vue.config.delimiters = ['${', '}'];
 
 var vue = new Vue({

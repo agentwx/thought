@@ -15,7 +15,7 @@ login{% extends "../single.html" %}
             	<t-input cid="email" desc="Email" :msg="email.emailErrorMsg"></t-input>
             </div>
             <div class="form-group" v-bind:class="{'has-error': password.passwordError}" >
-            	<t-input cid="password" desc="password" :msg="password.passwordErrorMsg"></t-input>
+            	<t-input cid="password" desc="password" ctype="password" :msg="password.passwordErrorMsg"></t-input>
             </div>
             <div class="form-group">
             	<t-submit value="Login" @click.stop.prevent="login('/api/v1/auth/login')"></t-submit>
@@ -28,3 +28,5 @@ login{% extends "../single.html" %}
 {% block end_scripts %}
 <script type="text/javascript" src="/static/dist/auth/login.js"></script>
 {% end %}
+
+

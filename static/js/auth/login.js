@@ -1,11 +1,22 @@
 var Vue = require('vue');
+var swal = require('sweetalert');
+var utils = require('../utils.js');
+
+var jQuery = $ = require('jquery');
+
+window.jQuery = jQuery;
+require('bootstrap');
+
+require('../../css/sweetalert.css');
 
 Vue.config.delimiters = ['${', '}'];
+
+
 var vue = new Vue({
     el: "#app",
     data: {
         email: {
-            emailError: false,
+            emailError: null,
             emailErrorMsg: "",
         },
         password: {
@@ -17,8 +28,6 @@ var vue = new Vue({
         login: function (api) {
             var email = $("#email").val().trim();
             var password = $("#password").val().trim();
-            var confirm = $("#confirm").val().trim();
-            
             
             // 提交验证
             if (utils.valid_email(email)){
@@ -36,17 +45,8 @@ var vue = new Vue({
                 this.password.passwordError = false;
                 this.password.passwordErrorMsg = "";
             }
-
-            if (password != confirm){
-                this.confirm.confirmError = true;
-                this.confirm.confirmErrorMsg = "password and comfirm must be the same";
-            }else{
-                this.confirm.confirmError = false;
-                this.confirm.confirmErrorMsg = "";
-            }
-
            
-            if (this.email.emailError || this.email.passwordError || this.confirm.confirmError){
+            if (this.email.emailError || this.email.passwordError){
                 return false
             }else {
                 $.ajax({
@@ -57,12 +57,24 @@ var vue = new Vue({
                     dataType: 'json',
                     success: function (resp) {
                         console.log(resp)
-                        // $(location).attr('href', '/auth/home');
+                        swal({
+                            title: "Login Successful",
+                            type: "success",
+                            timer: 2000,
+                            allowOutsideClick: true
+                        }, function(){
+                            $(location).attr('href', '/auth/home');
+                        })
                     },
                     error: function (XMLHttpRequest, textStatus) {
                         var status_code = XMLHttpRequest.status;
                         var body = JSON.parse(XMLHttpRequest.responseText);
-                        alert(body.message)
+                        swal({
+                            title: body.message,
+                            type: "error",
+                            timer: 2000,
+                            allowOutsideClick: true
+                        })
                     }
                 });
                 return false;
