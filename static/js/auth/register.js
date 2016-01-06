@@ -69,12 +69,19 @@ var vue = new Vue({
                 $.ajax({
                     async: true,
                     url: api,
-                    data: JSON.stringify({email: email, password: password}),
+                    data: JSON.stringify({email: email, password: btoa(password)}),
                     type: 'post',
                     dataType: 'json',
                     success: function (resp) {
                         console.log(resp)
-                        // $(location).attr('href', '/auth/home');
+                        swal({
+                            title: "Register Successful",
+                            type: "success",
+                            timer: 2000,
+                            allowOutsideClick: true
+                        }, function(){
+                            $(location).attr('href', '/home');
+                        })
                     },
                     error: function (XMLHttpRequest, textStatus) {
                         var status_code = XMLHttpRequest.status;

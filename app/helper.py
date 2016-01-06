@@ -26,7 +26,6 @@ class BaseRequestHandler(tornado.web.RequestHandler):
     def jsonify(self, data):
         self.finish(json.dumps(data))
 
-
 class BaseApiRequestHandler(BaseRequestHandler):
 
     def check_xsrf_cookie(self):
@@ -56,3 +55,8 @@ def parse_json(method):
         setattr(self.request, 'data', data)
         return method(self, *args, **kwargs)
     return wrapper
+
+
+def parse_email_to_user(email):
+    user, _ = email.split('@')
+    return user

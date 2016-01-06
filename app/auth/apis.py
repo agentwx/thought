@@ -37,7 +37,7 @@ class ApiAuthLoginhandler(helper.BaseApiRequestHandler):
             if user.nickname:
                 self.session['user'] = user.nickname
             else:
-                self.session['user'], _ = user.email.split('@')
+                self.session['user'] = helper.parse_email_to_user(user.email)
             self.session.save()
             result = {}
         else:
@@ -56,6 +56,7 @@ class ApiAuthRegisterHandler(helper.BaseApiRequestHandler):
 
         user = User.findone(email=email)
         if user:
+            self.set_status(400)
             result = dict(code=AuthError.user_has_exist.code, message=AuthError.user_has_exist.message)
         else:
             user = User(email=email, password=password)
@@ -68,6 +69,9 @@ class ApiAuthRegisterHandler(helper.BaseApiRequestHandler):
                 if row:
                     self.set_status(201)
                     result = {}
+                    self.session['user'] = helper.parse_email_to_user(user.email)
+                    self.session['id'] = row
+                    self.session.save()
                 else:
                     self.set_status(500)
                     result = dict(code=DBError.insert_error.code, messge=DBError.insert_error.message)
