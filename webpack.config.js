@@ -7,7 +7,8 @@ module.exports = {
         "auth/login": "./static/js/auth/login.js",
         "auth/register": "./static/js/auth/register.js",
         "index": "./static/js/thought/index.js",
-        "account/home": "./static/js/account/home.js"
+        "account/home": "./static/js/account/home.js",
+        "post/add": "./static/js/post/add.js"
 
     },
     output: {
@@ -32,3 +33,5 @@ module.exports = {
         ]
     }
 };
+
+

@@ -13,14 +13,14 @@
 
             {% module xsrf_form_html() %}
         
-            <div class="form-group" v-bind:class="{'has-error': email.emailError}" >
+            <div class="form-group" :class="{'has-error': email.emailError}" >
                 <t-input cid="email" ctype="text" desc="Email" :msg="email.emailErrorMsg"></t-input>
             </div>
 
-            <div class="form-group" v-bind:class="{'has-error': password.passwordError}">
+            <div class="form-group" :class="{'has-error': password.passwordError}">
                 <t-input cid="password" ctype="password" desc="password" :msg="password.passwordErrorMsg"></t-input>
             </div>
-            <div class="form-group" v-bind:class="{'has-error': confirm.confirmError}">
+            <div class="form-group" :class="{'has-error': confirm.confirmError}">
                 <t-input cid="confirm" ctype="password" desc="confirm" :msg="confirm.confirmErrorMsg"></t-input>
             </div>
 

@@ -1,0 +1,24 @@
+{% extends "../single.html" %}
+{% block title %}Add{% end %}
+
+{% block main %}
+<div class="row" id="app">
+    <div class="col-md-4 col-md-push-4">
+        <form class="form-horizontal" role="form" method="post">
+            {%  raw xsrf_form_html() %}
+            <div class="form-group" :class="{'has-error': motto.mottoError}" >
+            	<t-textarea class="form-control" rows="3" cid="motto" :msg="motto.mottoErrorMsg"></t-textarea>
+            </div>
+            <div class="form-group">
+            	<t-submit value="Post" @click.stop.prevent="add('/api/v1/post/add')"></t-submit>
+            </div>
+        </form>
+    </div>
+</div>
+	
+
+{% end %}
+
+{% block end_scripts %}
+<script type="text/javascript" src="/static/dist/post/add.js"></script>
+{% end %}
