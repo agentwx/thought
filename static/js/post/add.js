@@ -18,13 +18,13 @@ var vue = new Vue({
         motto: {
             mottoError: false,
             mottoErrorMsg: "",
-            mottoLength: 1
+            mottoLength: 20
         }
     },
     methods: {
         add: function (api) {
             var text = $("#motto").val().trim();
-            console.log(text)
+            
 
              // 提交验证
             if (utils.valid_motto(text, this.motto.mottoLength)){
@@ -40,8 +40,8 @@ var vue = new Vue({
                 $.ajax({
                     async: true,
                     url: api,
-                    type: 'get',
-                    data: JSON.stringify({motto: text}),
+                    type: 'post',
+                    data: JSON.stringify({text: text}),
                     dataType: 'json',
                     success: function (resp) {
                         console.log(resp)
@@ -76,8 +76,6 @@ var vue = new Vue({
     },
     events: {
         "child-valid": function (value) {
-            alert('' + value.length +' ' +  this.motto.mottoLength)
-
             if (utils.valid_motto(value, this.motto.mottoLength)){
                 this.motto.mottoError = true;
                 this.motto.mottoErrorMsg = "motto text must be less than " + this.motto.mottoLength + " lettes";
